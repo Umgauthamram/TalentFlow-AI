@@ -1,0 +1,372 @@
+/* ═══════════════════════════════════════════════
+   Pipeline — Kanban Board
+   ═══════════════════════════════════════════════ */
+
+.pipeline-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--space-4);
+  color: var(--text-secondary);
+}
+
+.pipeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.pipeline-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-primary);
+}
+
+.pipeline-title h1 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pipeline-count {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  background: var(--bg-card);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+}
+
+.pipeline-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pipeline-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-3);
+  height: 36px;
+}
+
+.pipeline-search:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.pipeline-search svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.pipeline-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: var(--font-family);
+  width: 180px;
+}
+
+.pipeline-job-filter {
+  height: 36px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: var(--font-family);
+  padding: 0 var(--space-3);
+  cursor: pointer;
+  outline: none;
+}
+
+.pipeline-job-filter:focus {
+  border-color: var(--primary);
+}
+
+/* ── Board ── */
+.pipeline-board {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-4);
+  min-height: calc(100vh - 220px);
+}
+
+.pipeline-board::-webkit-scrollbar {
+  height: 6px;
+}
+
+.pipeline-board::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 6px;
+}
+
+.pipeline-column {
+  flex: 0 0 260px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 220px);
+  transition: border-color var(--transition-fast);
+}
+
+.pipeline-column-droppable {
+  border-color: var(--primary);
+  border-style: dashed;
+}
+
+.pipeline-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-card);
+}
+
+.pipeline-column-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pipeline-stage-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.pipeline-column-count {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  background: var(--bg-elevated);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+}
+
+.pipeline-column-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ── Card ── */
+.pipeline-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  cursor: grab;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pipeline-card:hover {
+  border-color: var(--border-light);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.pipeline-card:active {
+  cursor: grabbing;
+}
+
+.pipeline-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pipeline-card-avatar {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: var(--radius-full);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.pipeline-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pipeline-card-name {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pipeline-card-title {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pipeline-card-star {
+  color: var(--warning);
+  flex-shrink: 0;
+}
+
+.pipeline-card-job {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  background: var(--bg-card);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Score Bar ── */
+.pipeline-card-score {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pipeline-score-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pipeline-score-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.score-excellent .pipeline-score-fill,
+.pipeline-score-fill.score-excellent {
+  background: linear-gradient(90deg, #10b981, #06d6a0);
+}
+
+.score-good .pipeline-score-fill,
+.pipeline-score-fill.score-good {
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+}
+
+.score-average .pipeline-score-fill,
+.pipeline-score-fill.score-average {
+  background: linear-gradient(90deg, #f59e0b, #eab308);
+}
+
+.score-low .pipeline-score-fill,
+.pipeline-score-fill.score-low {
+  background: linear-gradient(90deg, #ef4444, #f97316);
+}
+
+.pipeline-score-value {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  min-width: 32px;
+  text-align: right;
+}
+
+.pipeline-score-value.score-excellent { color: var(--success); }
+.pipeline-score-value.score-good { color: var(--info); }
+.pipeline-score-value.score-average { color: var(--warning); }
+.pipeline-score-value.score-low { color: var(--danger); }
+
+/* ── Card Actions ── */
+.pipeline-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-1);
+}
+
+.pipeline-card-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-tertiary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pipeline-card-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* ── Empty State ── */
+.pipeline-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .pipeline-board {
+    flex-direction: column;
+  }
+  .pipeline-column {
+    flex: none;
+    max-height: none;
+  }
+  .pipeline-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pipeline-controls {
+    flex-direction: column;
+  }
+  .pipeline-search input {
+    width: 100%;
+  }
+}
