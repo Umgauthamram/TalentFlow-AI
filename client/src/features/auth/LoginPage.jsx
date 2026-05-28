@@ -27,16 +27,6 @@ export default function LoginPage() {
     }
   };
 
-  const demoLogin = (role) => {
-    const creds = {
-      admin: { email: 'admin@talentflow.ai', password: 'admin123' },
-      recruiter: { email: 'sarah@talentflow.ai', password: 'recruiter123' },
-      hiring_manager: { email: 'michael@talentflow.ai', password: 'manager123' }
-    };
-    setEmail(creds[role].email);
-    setPassword(creds[role].password);
-    setError('');
-  };
 
   return (
     <div className="auth-page">
@@ -110,21 +100,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="auth-divider">
-          <span>Quick Demo Access</span>
-        </div>
-
-        <div className="auth-demo-buttons">
-          <button onClick={() => demoLogin('admin')} className="auth-demo-btn admin">
-            Admin
-          </button>
-          <button onClick={() => demoLogin('recruiter')} className="auth-demo-btn recruiter">
-            Recruiter
-          </button>
-          <button onClick={() => demoLogin('hiring_manager')} className="auth-demo-btn manager">
-            Hiring Manager
-          </button>
-        </div>
 
         <p className="auth-footer">
           Don't have an account? <Link to="/register">Create one</Link>
