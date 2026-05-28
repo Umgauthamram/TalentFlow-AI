@@ -27,7 +27,7 @@ export default function LoginPage() {
     }
   };
 
-  const demoLogin = async (role) => {
+  const demoLogin = (role) => {
     const creds = {
       admin: { email: 'admin@talentflow.ai', password: 'admin123' },
       recruiter: { email: 'sarah@talentflow.ai', password: 'recruiter123' },
@@ -35,16 +35,7 @@ export default function LoginPage() {
     };
     setEmail(creds[role].email);
     setPassword(creds[role].password);
-    setLoading(true);
     setError('');
-    try {
-      await login(creds[role].email, creds[role].password);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (

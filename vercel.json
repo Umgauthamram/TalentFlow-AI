@@ -19,6 +19,22 @@
       "dest": "server/server.js"
     },
     {
+      "src": "/assets/(.*)",
+      "dest": "client/assets/$1"
+    },
+    {
+      "src": "/favicon.svg",
+      "dest": "client/favicon.svg"
+    },
+    {
+      "src": "/icons.svg",
+      "dest": "client/icons.svg"
+    },
+    {
+      "src": "/((?!api).*[^/])",
+      "dest": "client/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "client/$1"
     }
