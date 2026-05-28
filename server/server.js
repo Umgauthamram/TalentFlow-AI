@@ -38,6 +38,15 @@ app.use('/api/interviews', interviewRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
+// Welcome route
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'TalentFlow AI Smart ATS API is running successfully',
+    healthCheck: '/api/health'
+  });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({
